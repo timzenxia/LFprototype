@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LexiFlash - 词库管理</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .deck-header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header-title {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    
+    .search-btn {
+      font-size: 20px;
+      color: var(--gray-600);
+    }
+    
+    .deck-categories {
+      padding: 0 20px;
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      margin-bottom: 20px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .deck-categories::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .category-tab {
+      padding: 8px 15px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    
+    .category-tab.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .category-tab:not(.active) {
+      background-color: var(--gray-100);
+      color: var(--gray-600);
+    }
+    
+    .deck-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      padding: 0 20px 20px;
+    }
+    
+    .deck-card {
+      background-color: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .deck-image {
+      height: 100px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .deck-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.5));
+    }
+    
+    .deck-level {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: var(--gray-800);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+    
+    .deck-content {
+      padding: 12px;
+    }
+    
+    .deck-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .deck-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--gray-600);
+    }
+    
+    .deck-count {
+      display: flex;
+      align-items: center;
+    }
+    
+    .deck-count i {
+      margin-right: 3px;
+    }
+    
+    .featured-section {
+      margin: 20px;
+    }
+    
+    .featured-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .featured-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    
+    .featured-more {
+      font-size: 14px;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .featured-deck {
+      background-color: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .featured-image {
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .featured-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background-color: #FF6B6B;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+    
+    .featured-content {
+      padding: 20px;
+    }
+    
+    .featured-deck-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    
+    .featured-description {
+      font-size: 14px;
+      color: var(--gray-600);
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    
+    .featured-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .featured-stats {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: var(--gray-600);
+      gap: 10px;
+    }
+    
+    .featured-stat {
+      display: flex;
+      align-items: center;
+    }
+    
+    .featured-stat i {
+      margin-right: 3px;
+    }
+    
+    .featured-action {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .add-deck-btn {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 30px;
+      background-color: var(--primary-color);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      box-shadow: 0 5px 15px rgba(51, 102, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="device-container">
+    <!-- iOS 状态栏 -->
+    <div class="status-bar">
+      <div class="status-bar-time">9:41</div>
+      <div class="status-bar-icons">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+      </div>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <div class="app-content">
+      <div class="deck-header">
+        <div class="header-title">词库</div>
+        <div class="search-btn">
+          <i class="fas fa-search"></i>
+        </div>
+      </div>
+      
+      <div class="deck-categories">
+        <div class="category-tab active">全部</div>
+        <div class="category-tab">考试类</div>
+        <div class="category-tab">商务类</div>
+        <div class="category-tab">学术类</div>
+        <div class="category-tab">生活类</div>
+        <div class="category-tab">兴趣类</div>
+        <div class="category-tab">我的词库</div>
+      </div>
+      
+      <div class="featured-section">
+        <div class="featured-header">
+          <div class="featured-title">精选词库</div>
+          <div class="featured-more">查看全部</div>
+        </div>
+        
+        <div class="featured-deck">
+          <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80');">
+            <div class="featured-badge">热门</div>
+            <div class="deck-overlay"></div>
+          </div>
+          <div class="featured-content">
+            <div class="featured-deck-title">雅思核心8.0高频词汇</div>
+            <div class="featured-description">包含雅思考试高频词汇，专为冲刺8.0分段学生准备。包含真题例句与场景应用。</div>
+            <div class="featured-meta">
+              <div class="featured-stats">
+                <div class="featured-stat">
+                  <i class="fas fa-book"></i> 3500词
+                </div>
+                <div class="featured-stat">
+                  <i class="fas fa-user"></i> 12.5万人学习
+                </div>
+              </div>
+              <div class="featured-action">添加</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="deck-grid">
+        <div class="deck-card">
+          <div class="deck-image" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80');">
+            <div class="deck-overlay"></div>
+            <div class="deck-level">初级</div>
+          </div>
+          <div class="deck-content">
+            <div class="deck-title">托福核心词汇</div>
+            <div class="deck-stats">
+              <div class="deck-count">
+                <i class="fas fa-book"></i> 2500词
+              </div>
+              <div class="deck-count">
+                <i class="fas fa-user"></i> 8.2万人
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="deck-card">
+          <div class="deck-image" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80');">
+            <div class="deck-overlay"></div>
+            <div class="deck-level">中级</div>
+          </div>
+          <div class="deck-content">
+            <div class="deck-title">商务英语</div>
+            <div class="deck-stats">
+              <div class="deck-count">
+                <i class="fas fa-book"></i> 1200词
+              </div>
+              <div class="deck-count">
+                <i class="fas fa-user"></i> 4.5万人
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="deck-card">
+          <div class="deck-image" style="background-image: url('https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80');">
+            <div class="deck-overlay"></div>
+            <div class="deck-level">初级</div>
+          </div>
+          <div class="deck-content">
+            <div class="deck-title">旅游英语</div>
+            <div class="deck-stats">
+              <div class="deck-count">
+                <i class="fas fa-book"></i> 800词
+              </div>
+              <div class="deck-count">
+                <i class="fas fa-user"></i> 3.1万人
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="deck-card">
+          <div class="deck-image" style="background-image: url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80');">
+            <div class="deck-overlay"></div>
+            <div class="deck-level">高级</div>
+          </div>
+          <div class="deck-content">
+            <div class="deck-title">医学英语</div>
+            <div class="deck-stats">
+              <div class="deck-count">
+                <i class="fas fa-book"></i> 1500词
+              </div>
+              <div class="deck-count">
+                <i class="fas fa-user"></i> 2.6万人
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="add-deck-btn">
+        <i class="fas fa-plus"></i>
+      </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+      <a href="home.html" class="tab-item">
+        <i class="tab-icon fas fa-home"></i>
+        <span>学习</span>
+      </a>
+      <a href="deck.html" class="tab-item active">
+        <i class="tab-icon fas fa-layer-group"></i>
+        <span>词库</span>
+      </a>
+      <a href="stats.html" class="tab-item">
+        <i class="tab-icon fas fa-chart-bar"></i>
+        <span>统计</span>
+      </a>
+      <a href="profile.html" class="tab-item">
+        <i class="tab-icon fas fa-user"></i>
+        <span>我的</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html> 

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LexiFlash - 注册</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .register-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+    }
+    
+    .back-button {
+      font-size: 24px;
+      color: var(--gray-700);
+      margin-bottom: 15px;
+    }
+    
+    .register-header {
+      margin-bottom: 30px;
+    }
+    
+    .register-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 10px;
+    }
+    
+    .register-subtitle {
+      font-size: 16px;
+      color: var(--gray-600);
+    }
+    
+    .language-selector {
+      border: 1px solid var(--gray-300);
+      border-radius: 12px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+    
+    .language-option {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .language-option:last-child {
+      border-bottom: none;
+    }
+    
+    .language-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      margin-right: 15px;
+      background-color: var(--primary-light);
+      color: white;
+    }
+    
+    .language-name {
+      font-weight: 600;
+    }
+    
+    .language-option.selected {
+      background-color: rgba(51, 102, 255, 0.05);
+    }
+    
+    .language-option.selected .checkbox {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+    }
+    
+    .checkbox {
+      width: 24px;
+      height: 24px;
+      border-radius: 12px;
+      border: 2px solid var(--gray-300);
+      margin-left: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .terms-text {
+      font-size: 14px;
+      color: var(--gray-600);
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .terms-text a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="device-container">
+    <!-- iOS 状态栏 -->
+    <div class="status-bar">
+      <div class="status-bar-time">9:41</div>
+      <div class="status-bar-icons">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+      </div>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <div class="app-content">
+      <div class="register-container">
+        <a href="login.html" class="back-button">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+        
+        <div class="register-header">
+          <div class="register-title">创建您的账户</div>
+          <div class="register-subtitle">选择您想要学习的语言</div>
+        </div>
+        
+        <div class="language-selector">
+          <div class="language-option selected">
+            <div class="language-icon">
+              <span>E</span>
+            </div>
+            <div class="language-name">英语</div>
+            <div class="checkbox">
+              <i class="fas fa-check" style="font-size: 12px;"></i>
+            </div>
+          </div>
+          
+          <div class="language-option">
+            <div class="language-icon" style="background-color: #FF6B6B;">
+              <span>J</span>
+            </div>
+            <div class="language-name">日语</div>
+            <div class="checkbox"></div>
+          </div>
+          
+          <div class="language-option">
+            <div class="language-icon" style="background-color: #20C997;">
+              <span>F</span>
+            </div>
+            <div class="language-name">法语</div>
+            <div class="checkbox"></div>
+          </div>
+          
+          <div class="language-option">
+            <div class="language-icon" style="background-color: #BE4BDB;">
+              <span>K</span>
+            </div>
+            <div class="language-name">韩语</div>
+            <div class="checkbox"></div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="您的昵称">
+        </div>
+        
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="电子邮箱">
+        </div>
+        
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="密码（至少8位）">
+        </div>
+        
+        <button class="btn btn-primary btn-block">立即注册</button>
+        
+        <div class="terms-text">
+          注册即表示您同意我们的<a href="#">服务条款</a>和<a href="#">隐私政策</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 

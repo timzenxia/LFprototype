@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LexiFlash - 首页</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .home-header {
+      padding: 20px;
+      padding-bottom: 5px;
+    }
+    
+    .greeting {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .streak {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: var(--gray-600);
+    }
+    
+    .streak i {
+      color: #FFC107;
+      margin-right: 5px;
+    }
+    
+    .daily-goal {
+      margin: 15px 20px;
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+    }
+    
+    .goal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .goal-title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    
+    .goal-detail {
+      font-size: 14px;
+      color: var(--gray-600);
+    }
+    
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin: 10px 0 5px;
+    }
+    
+    .progress-number {
+      font-weight: 700;
+    }
+    
+    .today-section {
+      margin: 30px 20px 20px;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    
+    .all-link {
+      font-size: 14px;
+      color: var(--primary-color);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    
+    .study-card {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      border-radius: 20px;
+      padding: 25px 20px;
+      color: white;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 20px rgba(31, 76, 213, 0.2);
+    }
+    
+    .card-count {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 5px;
+    }
+    
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .start-btn {
+      background-color: white;
+      color: var(--primary-color);
+      border-radius: 50px;
+      padding: 10px 25px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    .start-btn i {
+      margin-left: 8px;
+    }
+    
+    .review-section {
+      margin: 30px 20px 20px;
+    }
+    
+    .review-cards {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding-bottom: 10px;
+      /* 隐藏滚动条但保留功能 */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .review-cards::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .review-card {
+      min-width: 150px;
+      background-color: white;
+      border-radius: 16px;
+      padding: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .review-card-title {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    
+    .review-card-count {
+      display: flex;
+      align-items: center;
+      color: var(--gray-600);
+      font-size: 14px;
+    }
+    
+    .review-card-count i {
+      margin-right: 5px;
+      color: var(--gray-500);
+    }
+  </style>
+</head>
+<body>
+  <div class="device-container">
+    <!-- iOS 状态栏 -->
+    <div class="status-bar">
+      <div class="status-bar-time">9:41</div>
+      <div class="status-bar-icons">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+      </div>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <div class="app-content">
+      <div class="home-header">
+        <div class="greeting">你好，Sylvia！</div>
+        <div class="streak">
+          <i class="fas fa-fire"></i> 连续学习14天
+        </div>
+      </div>
+      
+      <div class="daily-goal">
+        <div class="goal-header">
+          <div class="goal-title">今日学习目标</div>
+          <div class="goal-detail">20个单词</div>
+        </div>
+        
+        <div class="progress-bar">
+          <div class="progress-bar-fill" style="width: 65%;"></div>
+        </div>
+        
+        <div class="progress-text">
+          <div>已学习</div>
+          <div class="progress-number">13/20</div>
+        </div>
+      </div>
+      
+      <div class="today-section">
+        <div class="section-header">
+          <div class="section-title">今日学习</div>
+          <a href="#" class="all-link">查看全部</a>
+        </div>
+        
+        <a href="card.html" class="study-card">
+          <div class="card-count">剩余7个单词</div>
+          <div class="card-title">完成今日目标</div>
+          <div class="card-actions">
+            <div class="start-btn">开始学习 <i class="fas fa-arrow-right"></i></div>
+          </div>
+        </a>
+        
+        <a href="#" class="study-card" style="background: linear-gradient(135deg, #20C997, #0CA678);">
+          <div class="card-count">额外加强</div>
+          <div class="card-title">复习易错单词</div>
+          <div class="card-actions">
+            <div class="start-btn" style="color: #20C997;">开始复习 <i class="fas fa-arrow-right"></i></div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="review-section">
+        <div class="section-header">
+          <div class="section-title">专题词库</div>
+          <a href="deck.html" class="all-link">全部词库</a>
+        </div>
+        
+        <div class="review-cards">
+          <div class="review-card">
+            <div class="review-card-title">托福核心词汇</div>
+            <div class="review-card-count">
+              <i class="fas fa-book"></i> 2500词
+            </div>
+          </div>
+          
+          <div class="review-card">
+            <div class="review-card-title">商务英语</div>
+            <div class="review-card-count">
+              <i class="fas fa-book"></i> 1200词
+            </div>
+          </div>
+          
+          <div class="review-card">
+            <div class="review-card-title">旅游英语</div>
+            <div class="review-card-count">
+              <i class="fas fa-book"></i> 800词
+            </div>
+          </div>
+          
+          <div class="review-card">
+            <div class="review-card-title">医学英语</div>
+            <div class="review-card-count">
+              <i class="fas fa-book"></i> 1500词
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+      <a href="home.html" class="tab-item active">
+        <i class="tab-icon fas fa-home"></i>
+        <span>学习</span>
+      </a>
+      <a href="deck.html" class="tab-item">
+        <i class="tab-icon fas fa-layer-group"></i>
+        <span>词库</span>
+      </a>
+      <a href="stats.html" class="tab-item">
+        <i class="tab-icon fas fa-chart-bar"></i>
+        <span>统计</span>
+      </a>
+      <a href="profile.html" class="tab-item">
+        <i class="tab-icon fas fa-user"></i>
+        <span>我的</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html> 

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LexiFlash - 学习统计</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .stats-header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header-title {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    
+    .header-action {
+      font-size: 18px;
+      color: var(--gray-600);
+    }
+    
+    .time-filter {
+      padding: 0 20px;
+      display: flex;
+      margin-bottom: 20px;
+    }
+    
+    .time-option {
+      flex: 1;
+      text-align: center;
+      padding: 8px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-600);
+      position: relative;
+    }
+    
+    .time-option.active {
+      color: var(--primary-color);
+    }
+    
+    .time-option.active:after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: var(--primary-color);
+      border-radius: 3px;
+    }
+    
+    .summary-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      padding: 0 20px;
+      margin-bottom: 25px;
+    }
+    
+    .summary-card {
+      background-color: white;
+      border-radius: 16px;
+      padding: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .summary-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    
+    .summary-value {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .summary-label {
+      font-size: 12px;
+      color: var(--gray-600);
+    }
+    
+    .chart-section {
+      background-color: white;
+      margin: 0 20px 25px;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    
+    .chart-container {
+      height: 200px;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    
+    .chart-bar {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    
+    .chart-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .chart-value {
+      background-color: var(--primary-light);
+      width: 100%;
+      border-radius: 8px 8px 0 0;
+      position: relative;
+    }
+    
+    .chart-label {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--gray-600);
+    }
+    
+    .chart-grid {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    
+    .grid-line {
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background-color: var(--gray-200);
+    }
+    
+    .chart-tooltip {
+      position: absolute;
+      background-color: var(--gray-900);
+      color: white;
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 5px;
+      transform: translateX(-50%);
+      bottom: 100%;
+      margin-bottom: 5px;
+      display: none;
+    }
+    
+    .chart-value:hover .chart-tooltip {
+      display: block;
+    }
+    
+    .streak-section {
+      background-color: white;
+      margin: 0 20px 25px;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .streak-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .streak-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    
+    .streak-title i {
+      color: #FFC107;
+      margin-right: 8px;
+    }
+    
+    .streak-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+    
+    .calendar-day {
+      aspect-ratio: 1;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    
+    .day-active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .day-inactive {
+      background-color: var(--gray-200);
+      color: var(--gray-500);
+    }
+    
+    .day-today {
+      background-color: rgba(51, 102, 255, 0.2);
+      color: var(--primary-color);
+      box-shadow: 0 0 0 2px var(--primary-color);
+    }
+    
+    .mastery-section {
+      background-color: white;
+      margin: 0 20px 25px;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .mastery-chart {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      height: 130px;
+      margin: 10px 0 20px;
+    }
+    
+    .mastery-ring {
+      width: 130px;
+      height: 130px;
+      border-radius: 65px;
+      background: conic-gradient(var(--primary-color) 0% 75%, #E9ECEF 75% 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .mastery-inner {
+      width: 110px;
+      height: 110px;
+      border-radius: 55px;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .mastery-percentage {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .mastery-label {
+      font-size: 12px;
+      color: var(--gray-600);
+    }
+    
+    .stats-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .stats-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .stats-item:last-child {
+      border-bottom: none;
+    }
+    
+    .stats-item-name {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: var(--gray-700);
+    }
+    
+    .stats-item-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+      font-size: 14px;
+      color: white;
+    }
+    
+    .stats-item-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="device-container">
+    <!-- iOS 状态栏 -->
+    <div class="status-bar">
+      <div class="status-bar-time">9:41</div>
+      <div class="status-bar-icons">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+      </div>
+    </div>
+    
+    <!-- 主内容区域 -->
+    <div class="app-content">
+      <div class="stats-header">
+        <div class="header-title">统计</div>
+        <div class="header-action">
+          <i class="fas fa-share-alt"></i>
+        </div>
+      </div>
+      
+      <div class="time-filter">
+        <div class="time-option">本周</div>
+        <div class="time-option active">本月</div>
+        <div class="time-option">全年</div>
+        <div class="time-option">全部</div>
+      </div>
+      
+      <div class="summary-cards">
+        <div class="summary-card">
+          <div class="summary-icon" style="background-color: rgba(51, 102, 255, 0.1); color: var(--primary-color);">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="summary-value">328</div>
+          <div class="summary-label">已学习单词</div>
+        </div>
+        
+        <div class="summary-card">
+          <div class="summary-icon" style="background-color: rgba(255, 193, 7, 0.1); color: #FFC107;">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="summary-value">16.5</div>
+          <div class="summary-label">学习时长（小时）</div>
+        </div>
+        
+        <div class="summary-card">
+          <div class="summary-icon" style="background-color: rgba(64, 192, 87, 0.1); color: #40C057;">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="summary-value">234</div>
+          <div class="summary-label">掌握单词</div>
+        </div>
+        
+        <div class="summary-card">
+          <div class="summary-icon" style="background-color: rgba(255, 107, 107, 0.1); color: #FF6B6B;">
+            <i class="fas fa-fire"></i>
+          </div>
+          <div class="summary-value">14</div>
+          <div class="summary-label">连续学习天数</div>
+        </div>
+      </div>
+      
+      <div class="chart-section">
+        <div class="section-title">每日学习</div>
+        
+        <div class="chart-container">
+          <div class="chart-grid">
+            <div class="grid-line" style="bottom: 25%;"></div>
+            <div class="grid-line" style="bottom: 50%;"></div>
+            <div class="grid-line" style="bottom: 75%;"></div>
+            <div class="grid-line" style="bottom: 100%;"></div>
+          </div>
+          
+          <div class="chart-bar">
+            <div class="chart-column">
+              <div class="chart-value" style="height: 30%;">
+                <div class="chart-tooltip">15词</div>
+              </div>
+              <div class="chart-label">1</div>
+            </div>
+            <div class="chart-column">
+              <div class="chart-value" style="height: 60%;">
+                <div class="chart-tooltip">30词</div>
+              </div>
+              <div class="chart-label">2</div>
+            </div>
+            <div class="chart-column">
+              <div class="chart-value" style="height: 40%;">
+                <div class="chart-tooltip">20词</div>
+              </div>
+              <div class="chart-label">3</div>
+            </div>
+            <div class="chart-column">
+              <div class="chart-value" style="height: 70%;">
+                <div class="chart-tooltip">35词</div>
+              </div>
+              <div class="chart-label">4</div>
+            </div>
+            <div class="chart-column">
+              <div class="chart-value" style="height: 50%;">
+                <div class="chart-tooltip">25词</div>
+              </div>
+              <div class="chart-label">5</div>
+            </div>
+            <div class="chart-column">
+              <div class="chart-value" style="height: 90%;">
+                <div class="chart-tooltip">45词</div>
+              </div>
+              <div class="chart-label">6</div>
+            </div>
+            <div class="chart-column">
+              <div class="chart-value" style="height: 80%;">
+                <div class="chart-tooltip">40词</div>
+              </div>
+              <div class="chart-label">7</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="streak-section">
+        <div class="streak-header">
+          <div class="streak-title">
+            <i class="fas fa-fire"></i> 学习连续性
+          </div>
+          <div class="streak-value">14天</div>
+        </div>
+        
+        <div class="calendar-grid">
+          <div class="calendar-day day-active">1</div>
+          <div class="calendar-day day-active">2</div>
+          <div class="calendar-day day-active">3</div>
+          <div class="calendar-day day-active">4</div>
+          <div class="calendar-day day-active">5</div>
+          <div class="calendar-day day-active">6</div>
+          <div class="calendar-day day-active">7</div>
+          <div class="calendar-day day-active">8</div>
+          <div class="calendar-day day-active">9</div>
+          <div class="calendar-day day-active">10</div>
+          <div class="calendar-day day-active">11</div>
+          <div class="calendar-day day-active">12</div>
+          <div class="calendar-day day-active">13</div>
+          <div class="calendar-day day-today">14</div>
+          <div class="calendar-day day-inactive">15</div>
+          <div class="calendar-day day-inactive">16</div>
+          <div class="calendar-day day-inactive">17</div>
+          <div class="calendar-day day-inactive">18</div>
+          <div class="calendar-day day-inactive">19</div>
+          <div class="calendar-day day-inactive">20</div>
+          <div class="calendar-day day-inactive">21</div>
+        </div>
+      </div>
+      
+      <div class="mastery-section">
+        <div class="section-title">记忆掌握度</div>
+        
+        <div class="mastery-chart">
+          <div class="mastery-ring">
+            <div class="mastery-inner">
+              <div class="mastery-percentage">75%</div>
+              <div class="mastery-label">总掌握率</div>
+            </div>
+          </div>
+        </div>
+        
+        <ul class="stats-list">
+          <li class="stats-item">
+            <div class="stats-item-name">
+              <div class="stats-item-icon" style="background-color: #40C057;">
+                <i class="fas fa-check"></i>
+              </div>
+              已掌握
+            </div>
+            <div class="stats-item-value">234 词</div>
+          </li>
+          <li class="stats-item">
+            <div class="stats-item-name">
+              <div class="stats-item-icon" style="background-color: #FFC107;">
+                <i class="fas fa-sync-alt"></i>
+              </div>
+              学习中
+            </div>
+            <div class="stats-item-value">56 词</div>
+          </li>
+          <li class="stats-item">
+            <div class="stats-item-name">
+              <div class="stats-item-icon" style="background-color: #FF6B6B;">
+                <i class="fas fa-exclamation-circle"></i>
+              </div>
+              需加强
+            </div>
+            <div class="stats-item-value">38 词</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- 底部导航栏 -->
+    <div class="tab-bar">
+      <a href="home.html" class="tab-item">
+        <i class="tab-icon fas fa-home"></i>
+        <span>学习</span>
+      </a>
+      <a href="deck.html" class="tab-item">
+        <i class="tab-icon fas fa-layer-group"></i>
+        <span>词库</span>
+      </a>
+      <a href="stats.html" class="tab-item active">
+        <i class="tab-icon fas fa-chart-bar"></i>
+        <span>统计</span>
+      </a>
+      <a href="profile.html" class="tab-item">
+        <i class="tab-icon fas fa-user"></i>
+        <span>我的</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html> 
