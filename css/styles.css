@@ -1,0 +1,283 @@
+/* LexiFlash 应用样式 */
+:root {
+  --primary-color: #3366FF;
+  --primary-dark: #1F4CD5;
+  --primary-light: #5E8AFF;
+  --success-color: #4CAF50;
+  --warning-color: #FFC107;
+  --danger-color: #F44336;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f7;
+  color: var(--gray-900);
+}
+
+/* 模拟 iPhone 外观 */
+.device-container {
+  width: 375px;
+  height: 812px;
+  background-color: white;
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  border: 1px solid #ddd;
+}
+
+/* iOS 状态栏 */
+.status-bar {
+  height: 44px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: relative;
+  z-index: 10;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.status-bar-time {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.status-bar-icons {
+  display: flex;
+  gap: 5px;
+}
+
+/* 主内容区域 */
+.app-content {
+  height: calc(100% - 44px - 83px); /* 减去状态栏和底部导航的高度 */
+  overflow-y: auto;
+  position: relative;
+}
+
+/* 底部导航栏 */
+.tab-bar {
+  height: 83px;
+  background-color: #fff;
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 20px; /* 为 iPhone 底部安全区域留出空间 */
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--gray-600);
+  font-size: 10px;
+  padding: 5px 0;
+  width: 20%;
+  text-decoration: none;
+}
+
+.tab-item.active {
+  color: var(--primary-color);
+}
+
+.tab-icon {
+  font-size: 24px;
+  margin-bottom: 3px;
+}
+
+/* 按钮样式 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1.5px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-block {
+  width: 100%;
+  margin: 10px 0;
+}
+
+/* 卡片样式 */
+.card {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin: 15px;
+}
+
+.flashcard {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  padding: 20px;
+}
+
+.flashcard-word {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 10px;
+}
+
+.flashcard-translation {
+  font-size: 18px;
+  color: var(--gray-600);
+  margin-top: 20px;
+}
+
+.flashcard-example {
+  font-size: 16px;
+  color: var(--gray-700);
+  font-style: italic;
+  margin-top: 30px;
+  line-height: 1.5;
+}
+
+/* 输入框样式 */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1.5px solid var(--gray-300);
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(51, 102, 255, 0.15);
+}
+
+/* 页面共享样式 */
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 25px 20px 15px;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: var(--gray-600);
+  margin: 0 20px 30px;
+}
+
+/* 索引页样式 */
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.preview-item {
+  border: 1px solid var(--gray-300);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.preview-title {
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+.preview-frame {
+  width: 100%;
+  height: 300px;
+  border: none;
+}
+
+/* 进度条样式 */
+.progress-bar {
+  height: 8px;
+  background-color: var(--gray-200);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 4px;
+}
+
+/* 列表样式 */
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.list-item-icon {
+  font-size: 24px;
+  margin-right: 15px;
+  color: var(--primary-color);
+}
+
+.list-item-content {
+  flex: 1;
+}
+
+.list-item-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.list-item-subtitle {
+  font-size: 14px;
+  color: var(--gray-600);
+}
+
+.list-item-action {
+  color: var(--gray-500);
+}
